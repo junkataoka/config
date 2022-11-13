@@ -79,7 +79,7 @@ DISABLE_AUTO_TITLE="true"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 
-plugins=(git zsh-autosuggestions zsh-syntax-highlighting zsh-vim-mode)
+plugins=(git zsh-autosuggestions zsh-syntax-highlighting zsh-vim-mode fzf-zsh-plugin)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -116,10 +116,7 @@ alias ide="~/.script/ide.sh"
 # keybindings for autosuggestion
 bindkey '^p' autosuggest-accept
 
-export PATH=/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin
-#if command -v tmux &> /dev/null && [ -z "$TMUX" ]; then
-#    tmux attach -t default || tmux new -s default
-#fi
+export PATH=/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/local/bin
 
-
-
+# FZF config
+export FZF_DEFAULT_COMMAND='rg --files --no-ignore-vcs --hidden'

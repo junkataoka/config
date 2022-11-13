@@ -114,6 +114,16 @@ else
   let g:vimwiki_ext2syntax = {'.md': 'markdown', '.markdown': 'markdown', '.mdown': 'markdown'}
   let g:vimwiki_global_ext = 0
 
+  "FZF keymapping
+  nnoremap <C-f> :Files<Cr>
+  "Quick ripgrep word under cursor
+  command! -bang -nargs=0 RgCWord
+    \ call fzf#vim#grep(
+    \   'rg --column --line-number --no-heading --color=always --smart-case '.shellescape(expand('<cword>')), 1,
+    \   fzf#vim#with_preview(), <bang>0)
+
+  nnoremap <C-g> :RgCWord<CR>
+
 
 endif
 
