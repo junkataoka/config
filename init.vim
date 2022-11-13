@@ -16,19 +16,31 @@ else
   Plug 'jremmen/vim-ripgrep'
   Plug 'nathanaelkane/vim-indent-guides'
   Plug 'Raimondi/delimitMate'
-  Plug 'nvim-lua/plenary.nvim'
   Plug 'TimUntersberger/neogit'
+  Plug 'nvim-lua/plenary.nvim'
   Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
   Plug 'neovim/nvim-lspconfig'
   Plug 'ojroques/nvim-lspfuzzy'
   Plug 'nvim-lua/completion-nvim'
+  Plug 'tpope/vim-repeat'
+  Plug 'pappasam/nvim-repl'
+  Plug 'numToStr/Navigator.nvim'
+  Plug 'itspriddle/vim-marked'
+  Plug 'vimwiki/vimwiki'
+  Plug 'tools-life/taskwiki'
+  Plug 'powerman/vim-plugin-AnsiEsc'
+  Plug 'majutsushi/tagbar'
+  Plug 'xarthurx/taskwarrior.vim'
   call plug#end()
 
+  "Remap leaderkey
+  let mapleader = ","
   "nvim-tree config load from init.lua
   :lua require('init')
 
   " Indention Options
   set autoindent
+  set nocompatible
   filetype plugin on
   filetype indent off
   let g:indent_guides_enable_on_vim_startup = 1
@@ -40,6 +52,9 @@ else
   set smarttab
   set tabstop=2
 
+  " No anoying swap file
+  set noswapfile
+
   " Search Options
   set hlsearch
   set ignorecase
@@ -50,7 +65,7 @@ else
   set display+=lastline
   set encoding=utf-8
   set linebreak
-  syntax enable
+  syntax on
   set wrap
 
   " User Interface Options
@@ -85,4 +100,20 @@ else
   set spell
 
 
+    "Key mapping for perl
+  nnoremap <leader><leader>e :ReplToggle<CR>
+  nmap <leader>e <Plug>ReplSendLine
+  vmap <leader>e <Plug>ReplSendVisual
+
+  "Vim wiki config to use markdown files
+  let wiki_1 = {}
+  let wiki_1.path = '~/vimwiki/'
+  let wiki_1.syntax = 'markdown'
+  let wiki_1.ext = '.md'
+  let g:vimwiki_list = [wiki_1]
+  let g:vimwiki_ext2syntax = {'.md': 'markdown', '.markdown': 'markdown', '.mdown': 'markdown'}
+  let g:vimwiki_global_ext = 0
+
+
 endif
+
