@@ -7,8 +7,25 @@ if exists('g:vscode')
 else
 
   call plug#begin()
-  Plug 'altercation/vim-colors-solarized'
+  Plug 'Mofiqul/dracula.nvim'
+  Plug 'glepnir/galaxyline.nvim' , {'branch': 'main'} " for status bar
+  Plug 'nvim-tree/nvim-web-devicons' " for file icons
+  Plug 'nvim-tree/nvim-tree.lua' " for nvim-tree
+  Plug 'junegunn/fzf', { 'do': { -> fzf#install() } } " for fuzzy search
+  Plug 'junegunn/fzf.vim'
+  Plug 'jremmen/vim-ripgrep'
+  Plug 'nathanaelkane/vim-indent-guides'
+  Plug 'Raimondi/delimitMate'
+  Plug 'nvim-lua/plenary.nvim'
+  Plug 'TimUntersberger/neogit'
+  Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+  Plug 'neovim/nvim-lspconfig'
+  Plug 'ojroques/nvim-lspfuzzy'
+  Plug 'nvim-lua/completion-nvim'
   call plug#end()
+
+  "nvim-tree config load from init.lua
+  :lua require('init')
 
   " Indention Options
   set autoindent
@@ -40,7 +57,7 @@ else
   set ruler
   set wildmenu
   set tabpagemax=50
-  colorscheme solarized
+  colorscheme dracula
   set background=dark
   set cursorline
   set number
@@ -65,5 +82,6 @@ else
   set history=1000
   set nomodeline
   set spell
+
 
 endif
