@@ -8,7 +8,7 @@ else
 
   call plug#begin()
   Plug 'Mofiqul/dracula.nvim'
-  Plug 'glepnir/galaxyline.nvim' , {'branch': 'main'} " for status bar
+  Plug 'kyazdani42/nvim-web-devicons' " lua, for status bar
   Plug 'nvim-tree/nvim-web-devicons' " for file icons
   Plug 'nvim-tree/nvim-tree.lua' " for nvim-tree
   Plug 'junegunn/fzf', { 'do': { -> fzf#install() } } " for fuzzy search
@@ -31,6 +31,7 @@ else
   set autoindent
   filetype plugin on
   filetype indent off
+  let g:indent_guides_enable_on_vim_startup = 1
 
   set smartindent
   set expandtab

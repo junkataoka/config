@@ -8,24 +8,65 @@ vim.opt.termguicolors = true
 -- empty setup using defaults
 require("nvim-tree").setup()
 
+-- neogit
+local neogit = require('neogit')
+neogit.setup {}
+
 -------------------- LSP -----------------------------------
---
-local lsp = require('lspconfig')
-local lspfuzzy = require('lspfuzzy')
-for ls, cfg in pairs({
-  bashls = {},
-  ccls = {},
-  jsonls = {},
-  julials = {on_attach=require'completion'.on_attach},
-  r_language_server = {on_attach=require'completion'.on_attach},
-  pylsp = {root_dir = lsp.util.root_pattern('.git', fn.getcwd()), on_attach=require'completion'.on_attach},
-}) do lsp[ls].setup(cfg) end
-lspfuzzy.setup {}
-map('n', '<space>,', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>')
-map('n', '<space>;', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>')
-map('n', '<space>d', '<cmd>lua vim.lsp.buf.definition()<CR>')
-map('n', '<space>f', '<cmd>lua vim.lsp.buf.formatting()<CR>')
-map('n', '<space>h', '<cmd>lua vim.lsp.buf.hover()<CR>')
-map('n', '<space>m', '<cmd>lua vim.lsp.buf.rename()<CR>')
-map('n', '<space>r', '<cmd>lua vim.lsp.buf.references()<CR>')
-map('n', '<space>s', '<cmd>lua vim.lsp.buf.document_symbol()<CR>')
+-- See `:help vim.diagnostic.*` for documentation on any of the below functions
+local opts = { noremap=true, silent=true }
+vim.keymap.set('n', '<space>e', vim.diagnostic.open_float, opts)
+vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, opts)
+vim.keymap.set('n', ']d', vim.diagnostic.goto_next, opts)
+vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist, opts)
+
+-- Use an on_attach function to only map the following keys
+-- after the language server attaches to the current buffer
+local on_attach = function(client, bufnr)
+  -- Enable completion triggered by <c-x><c-o>
+  vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
+
+  -- Mappings.
+  -- See `:help vim.lsp.*` for documentation on any of the below functions
+  local bufopts = { noremap=true, silent=true, buffer=bufnr }
+  vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, bufopts)
+  vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts)
+  vim.keymap.set('n', 'K', vim.lsp.buf.hover, bufopts)
+  vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, bufopts)
+  vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, bufopts)
+  vim.keymap.set('n', '<space>wa', vim.lsp.buf.add_workspace_folder, bufopts)
+  vim.keymap.set('n', '<space>wr', vim.lsp.buf.remove_workspace_folder, bufopts)
+  vim.keymap.set('n', '<space>wl', function()
+    print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+  end, bufopts)
+  vim.keymap.set('n', '<space>D', vim.lsp.buf.type_definition, bufopts)
+  vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, bufopts)
+  vim.keymap.set('n', '<space>ca', vim.lsp.buf.code_action, bufopts)
+  vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
+  vim.keymap.set('n', '<space>f', function() vim.lsp.buf.format { async = true } end, bufopts)
+end
+
+local lsp_flags = {
+  -- This is the default in Nvim 0.7+
+  debounce_text_changes = 150,
+}
+require('lspconfig')['pyright'].setup{
+    on_attach = on_attach,
+    flags = lsp_flags,
+}
+require('lspconfig')['tsserver'].setup{
+    on_attach = on_attach,
+    flags = lsp_flags,
+}
+require('lspconfig')['r_language_server'].setup{
+    on_attach = on_attach,
+    flags = lsp_flags,
+}
+require('lspconfig')['rust_analyzer'].setup{
+    on_attach = on_attach,
+    flags = lsp_flags,
+    -- Server-specific settings...
+    settings = {
+      ["rust-analyzer"] = {}
+    }
+}
