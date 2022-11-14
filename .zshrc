@@ -78,8 +78,8 @@ DISABLE_AUTO_TITLE="true"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-
-plugins=(git zsh-autosuggestions zsh-syntax-highlighting zsh-vim-mode fzf-zsh-plugin)
+FZF_BASE=$HOME/.fzf
+plugins=(git zsh-syntax-highlighting zsh-autosuggestions fzf)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -114,9 +114,13 @@ alias ide="~/.script/ide.sh"
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 # keybindings for autosuggestion
-bindkey '^p' autosuggest-accept
+# bindy 
 
 export PATH=/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/local/bin
 
 # FZF config
 export FZF_DEFAULT_COMMAND='rg --files --no-ignore-vcs --hidden'
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+# vim key binding
+bindkey -v
+

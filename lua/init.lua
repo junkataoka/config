@@ -78,7 +78,6 @@ vim.keymap.set('n', "<C-h>", '<CMD>NavigatorLeft<CR>')
 vim.keymap.set('n', "<C-l>", '<CMD>NavigatorRight<CR>')
 vim.keymap.set('n', "<C-k>", '<CMD>NavigatorUp<CR>')
 vim.keymap.set('n', "<C-j>", '<CMD>NavigatorDown<CR>')
-vim.keymap.set('n', "<C-space>", '<CMD>NavigatorPrevious<CR>')
 
 --nvimtree keybinding--
 vim.keymap.set('n', '<leader>n', ':NvimTreeToggle<CR>')
